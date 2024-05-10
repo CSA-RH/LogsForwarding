@@ -1,4 +1,4 @@
-# Log forwarding and filter by log content
+# Log forwarding and filter by log content using Vector
 
 Initialize some variables that we will use along the process
 ```
