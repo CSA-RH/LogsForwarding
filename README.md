@@ -53,6 +53,23 @@ aws iam attach-user-policy \
     --user-name  vector-to-cloudwatch \
     --policy-arn ${POLICY_ARN}
 ```
+
+Create the ClusterLogging instance using Vector
+```
+cat << EOF | oc apply -f -
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogging
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  collection:
+    type: vector
+    vector: {}
+    managementState: Managed
+EOF
+```
+
 Store the id and key in variables to create the secret easily. 
 ```
 AWS_ID=`cat $WORKING_DIR/aws-access-key.json | jq -r '.AccessKey.AccessKeyId'`
@@ -72,24 +89,7 @@ EOF
 > [!NOTE]
 > the ClusterLogForwarder version 5.6 already supports STS, so please follow the steps described in the doc https://docs.openshift.com/rosa/observability/logging/log_collection_forwarding/configuring-log-forwarding.html#rosa-cluster-logging-collector-log-forward-sts-cloudwatch_configuring-log-forwarding
 
-
-Create the ClusterLogForwarder instance and define a simple filter for demo purpose
-
-Create the ClusterLogging instance using Vector
-```
-cat << EOF | oc apply -f -
-apiVersion: logging.openshift.io/v1
-kind: ClusterLogging
-metadata:
-  name: instance
-  namespace: openshift-logging
-spec:
-  collection:
-    type: vector
-    vector: {}
-    managementState: Managed
-EOF
-```
+Define a simple filter for demo purpose
 
 > [!NOTE]
 > At the time this doc was written I found some issues: https://github.com/openshift/openshift-docs/pull/75742
