@@ -69,6 +69,9 @@ stringData:
     aws_secret_access_key: $AWS_KEY
 EOF
 ```
+> [!NOTE]
+> the ClusterLogForwarder version 5.6 already supports STS, so please follow the steps described in the doc https://docs.openshift.com/rosa/observability/logging/log_collection_forwarding/configuring-log-forwarding.html#rosa-cluster-logging-collector-log-forward-sts-cloudwatch_configuring-log-forwarding
+
 Create the ClusterLogForwarder instance and define a simple filter for demo purpose
 
 > [!NOTE]
